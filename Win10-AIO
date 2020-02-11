@@ -50,7 +50,7 @@ Powershell Remove-Item C:\Windows\Temp\App_Uninstaller2.ps1 -recurse
 
 :: Script to download Corp logos from dropbox
 Powershell Invoke-WebRequest https://www.dropbox.com/sh/URL?dl=1 -OutFile C:\Windows\Temp\accountpics.zip 
-Powershell Expand-Archive C:\Windows\Temp\accountpics.zip -DestinationPath C:\Windows\Temp\thinktvaccountpics
+Powershell Expand-Archive C:\Windows\Temp\accountpics.zip -DestinationPath C:\Windows\Temp\accountpics
 
 :: Replaces User Account Pictures with Corporate Logos
 Powershell Copy-Item -Path 'C:\Windows\Temp\accountpics\*' -recurse -destination 'C:\ProgramData\Microsoft\User Account Pictures\' -force
@@ -104,7 +104,7 @@ REG ADD "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\People
 
 :: Hide Edge Button in IE
 REG ADD "HKCU\Software\Microsoft\Internet Explorer\Main" /V HideNewEdgeButton /T REG_dWORD /F /D 1
-:: Change homepage to thinktv
+:: Change homepage to domain of choice
 reg add "HKCU\SOFTWARE\Microsoft\Internet Explorer\Main" /v "Start Page" /t REG_SZ /d "http://www.domain.org" /f
 
 :: Disable Edge First Run and set homepage
