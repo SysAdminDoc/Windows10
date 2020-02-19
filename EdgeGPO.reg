@@ -33,7 +33,7 @@ Windows Registry Editor Version 5.00
 "ClearBrowsingDataOnExit"=dword:00000001
 "PrintPreviewUseSystemDefaultPrinter"=dword:00000001
 "NewTabPageLocation"="https://www.google.com/?gws_rd=ssl"
-"HomepageLocation"="https://www.thinktv.org"
+"HomepageLocation"="https://www.homepage.com"
 "ShowHomeButton"=dword:00000001
 "PasswordManagerEnabled"=dword:00000001
 "RestoreOnStartup"=dword:00000004
