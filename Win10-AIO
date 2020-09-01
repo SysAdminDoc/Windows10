@@ -1,4 +1,4 @@
-:: This is entirely custom with bits and pieces taken from various resources through the years. This script runs for every new machine and after every version update of Windows 10.
+:: For Windows 10 Upgrade.
 
 :: Create Restore Point
 PowerShell -Command checkpoint-computer -description "Checkpoint"
