@@ -1,8 +1,5 @@
 :: This is entirely custom with bits and pieces taken from various resources through the years. This script runs for every new machine and after every version update of Windows 10.
 
-:: Setting Powershell Execution Policy
-Powershell Set-ExecutionPolicy RemoteSigned
-
 :: Create Restore Point
 PowerShell -Command checkpoint-computer -description "Checkpoint"
 
@@ -42,7 +39,6 @@ Powershell Invoke-WebRequest https://www.dropbox.com/s/6bhwl85dht1cab8/Unpin_Sto
 powershell -ExecutionPolicy ByPass powershell.exe C:\Windows\Temp\unpin.ps1
 Powershell Remove-Item C:\Windows\Temp\unpin.ps1 -recurse
 
-
 :: Remove Microsoft Bloat
 Powershell Invoke-WebRequest https://www.dropbox.com/s/8ar40kvlqwlf8xj/App_Uninstaller2.ps1?dl=1 -OutFile C:\Windows\Temp\App_Uninstaller2.ps1 
 powershell -ExecutionPolicy ByPass powershell.exe C:\Windows\Temp\App_Uninstaller2.ps1
@@ -51,13 +47,10 @@ Powershell Remove-Item C:\Windows\Temp\App_Uninstaller2.ps1 -recurse
 :: Script to download Corp logos from dropbox
 Powershell Invoke-WebRequest https://www.dropbox.com/sh/URL?dl=1 -OutFile C:\Windows\Temp\accountpics.zip 
 Powershell Expand-Archive C:\Windows\Temp\accountpics.zip -DestinationPath C:\Windows\Temp\accountpics
-
 :: Replaces User Account Pictures with Corporate Logos
 Powershell Copy-Item -Path 'C:\Windows\Temp\accountpics\*' -recurse -destination 'C:\ProgramData\Microsoft\User Account Pictures\' -force
-
 Powershell Remove-Item C:\Windows\Temp\accountpics -recurse
 Powershell Remove-Item C:\Windows\Temp\accountpics.zip -recurse
-
 :: Make Logo default for all accounts
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v UseDefaultTile /t REG_DWORD /d 1 /f
 
@@ -67,7 +60,6 @@ REG ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v RegisteredOrganiz
 
 :: Disable Lockscreen
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization" /V NoLockScreen /T REG_dWORD /F /D 1
-
 :: Disable Lockscreen Background
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /V DisableLogonBackgroundImage /T REG_dWORD /F /D 1
 
@@ -76,23 +68,6 @@ REG ADD "HKCU\Software\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\
 REG ADD "HKCU\Software\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy" /V 04 /T REG_dWORD /D 1 /F
 REG ADD "HKCU\Software\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy" /V 08 /T REG_dWORD /D 1 /F
 REG ADD "HKCU\Software\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy" /V 32 /T REG_dWORD /D 1 /F
-
-:: Set default PhotoViewer 
-reg add "HKCU\SOFTWARE\Classes\.ico" /ve /t REG_SZ /d "PhotoViewer.FileAssoc.Tiff" /f
-reg add "HKCU\SOFTWARE\Classes\.tiff" /ve /t REG_SZ /d "PhotoViewer.FileAssoc.Tiff" /f
-reg add "HKCU\SOFTWARE\Classes\.bmp" /ve /t REG_SZ /d "PhotoViewer.FileAssoc.Tiff" /f
-reg add "HKCU\SOFTWARE\Classes\.png" /ve /t REG_SZ /d "PhotoViewer.FileAssoc.Tiff" /f
-reg add "HKCU\SOFTWARE\Classes\.gif" /ve /t REG_SZ /d "PhotoViewer.FileAssoc.Tiff" /f
-reg add "HKCU\SOFTWARE\Classes\.jpeg" /ve /t REG_SZ /d "PhotoViewer.FileAssoc.Tiff" /f
-reg add "HKCU\SOFTWARE\Classes\.jpg" /ve /t REG_SZ /d "PhotoViewer.FileAssoc.Tiff" /f
-
-:: Disables Windows 10 Default Printer Behavior
-REG ADD "HKCU\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows" /v "LegacyDefaultPrinterMode" /t REG_DWORD /d "1" /f
-
-:: Disable Game Bar/Mode
-REG ADD "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR" /v "AppCaptureEnabled" /t REG_DWORD /d "0" /f
-REG ADD "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR" /v "GameDVR_Enabled" /t REG_DWORD /d "0" /f
-REG ADD "HKCU\Software\Microsoft\GameBar" /v "AllowAutoGameMode" /t REG_DWORD /d "0" /f
 
 :: Hide People Bar
 reg add "HKCU\Software\Policies\Microsoft\Windows\Explorer" /v "HidePeopleBar" /t REG_DWORD /d 1 /f
@@ -135,16 +110,7 @@ reg add "HKCU\SOFTWARE\Microsoft\Personalization\Settings" /v "AcceptedPrivacyPo
 reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "DeviceHistoryEnabled" /t REG_DWORD /d 0 /f
 reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "HistoryViewEnabled" /t REG_DWORD /d 0 /f
 
-:: Disable keylogger 
-reg add "HKCU\SOFTWARE\Microsoft\InputPersonalization" /v "RestrictImplicitInkCollection" /t REG_DWORD /d 1 /f
-reg add "HKCU\SOFTWARE\Microsoft\InputPersonalization" /v "RestrictImplicitTextCollection" /t REG_DWORD /d 1 /f
-reg add "HKCU\SOFTWARE\Microsoft\InputPersonalization\TrainedDataStore" /v "HarvestContacts" /t REG_DWORD /d 0 /f
-
-:: Block Google Chrome Software Reporter Tool
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "DisallowRun" /t REG_DWORD /d 1 /f
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\DisallowRun" /v 1 /t REG_SZ /d software_reporter_tool.exe /f
-
-:: Disable Edge First Run on 1803
+:: Disable Edge First Run
 REG ADD "HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer" /V DisableEdgeDesktopShortcutCreation /T REG_dWORD /F /D 1
 
 :: Downloads DefaultApps
@@ -152,7 +118,6 @@ Powershell Invoke-WebRequest https://www.dropbox.com/s/94bdaebj6c2wl8f/DefaultAp
 Powershell Invoke-WebRequest https://www.dropbox.com/s/po98ceavrqom3yp/DefaultAssociations.reg?dl=1 -OutFile C:\Windows\System32\DefaultAssociations.reg 
 Reg import "C:\Windows\System32\DefaultAssociations.reg"
 del "C:\Windows\System32\DefaultAssociations.reg"
-
 
 :: Install uBlock Origin adblocker for Chrome
 reg ADD "HKLM\SOFTWARE\Policies\Google\Chrome\ExtensionInstallForcelist" /v "1" /d "cjpalhdlnbpafiamejdnhcphjbkeiagm;https://clients2.google.com/service/update2/crx" /f
@@ -162,10 +127,7 @@ reg ADD "HKLM\SOFTWARE\Policies\Google\Chrome\ExtensionInstallBlacklist" /v "1" 
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "DisallowRun" /t REG_DWORD /d 1 /f
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\DisallowRun" /v 1 /t REG_SZ /d software_reporter_tool.exe /f
 
-:: Turn off Sticky Key when Shift is pressed 5 times
-reg add "HKCU\Control Panel\Accessibility\StickyKeys" /v Flags /t REG_SZ /d "506" /f
-
-:: Disable Features
+:: Disable and Adjust Features
 Dism /Online /Disable-Feature /FeatureName:FaxServicesClientPackage /Quiet /NoRestart
 Dism /Online /Disable-Feature /FeatureName:Printing-XPSServices-Features /Quiet /NoRestart
 Dism /Online /Disable-Feature /FeatureName:WorkFolders-Client /Quiet /NoRestart
