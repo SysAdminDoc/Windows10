@@ -1,0 +1,5 @@
+
+:: Optimize 
+Powershell New-Item -Path 'C:\MTU' -ItemType Directory
+Powershell Invoke-WebRequest https://gist.githubusercontent.com/SysAdminDoc/74d8087fc6a32fb16f2d48e7c061ac5c/raw/8678310a62a5a1eb5efb9614654fb2f82edd25d4/Essential.ps1 -OutFile C:\MTU\Essential.ps1
+powershell -ExecutionPolicy ByPass powershell.exe C:\MTU\Essential.ps1
